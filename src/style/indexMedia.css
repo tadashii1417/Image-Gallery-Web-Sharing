@@ -1,0 +1,66 @@
+/* Extremely large device */
+@media only screen and (max-width: 1300px) {
+  nav {
+    padding: 0 4%;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width: 1200px) {
+  .navigation {
+    display: none;
+  }
+  .upload {
+    display: none;
+  }
+  .fa-bars {
+    display: block;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 992px) {
+  .heading-welcome {
+    width: 80%;
+  }
+  .column {
+    -webkit-box-flex: 50%;
+        -ms-flex: 50%;
+            flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width: 768px) {
+  .action-area {
+    display: none;
+  }
+  .searchbox {
+    width: 50%;
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 480px) {
+  .column {
+    -webkit-box-flex: 100%;
+        -ms-flex: 100%;
+            flex: 100%;
+    max-width: 100%;
+  }
+  .searchbox {
+    display: none;
+  }
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width: 320px) {
+  .heading-welcome {
+    font-size: 15px;
+    width: 90%;
+  }
+  #title {
+    font-size: 40px;
+  }
+}
