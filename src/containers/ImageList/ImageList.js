@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ImageCard from '../../components/imageCard/imageCard';
 
 class ImageList extends Component {
@@ -38,15 +38,15 @@ class ImageList extends Component {
 
     render() {
         return (
-            <div style={{ margin: '50px 0' }}>
-                <div class="session-title">
+            <div style={{margin: '50px 0'}}>
+                <div className="session-title">
                     <h4>Our stunning images</h4>
                 </div>
 
-                <div class='image-gallery'>
+                <div className='image-gallery'>
                     {
                         this.state.imageList.map(image => (
-                            <ImageCard imageInfo={image} />
+                            <ImageCard imageInfo={image} key={image.id}/>
                         ))
                     }
                 </div>

@@ -16,6 +16,9 @@
   .fa-bars {
     display: block;
   }
+  .login-form {
+    width: 50%;
+  }
 }
 
 /* Medium Devices, Desktops */
@@ -29,6 +32,9 @@
             flex: 50%;
     max-width: 50%;
   }
+  .login-form {
+    width: 50%;
+  }
 }
 
 /* Small Devices, Tablets */
@@ -37,6 +43,9 @@
     display: none;
   }
   .searchbox {
+    width: 50%;
+  }
+  .login-form {
     width: 50%;
   }
 }

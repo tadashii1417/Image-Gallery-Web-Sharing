@@ -1,17 +1,34 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './style/materialize.min.css';
 import './style/materialize-social.css';
 import './style/App.css';
 import './style/indexMedia.css';
-import { Route, Switch } from 'react-router-dom';
-import Homepage from './containers/Homepage/Homepage';
+import Route from './router/index';
+import {connect} from "react-redux";
+import * as authActions from './store/actions/auth.action';
+import {getToken} from "./sessionStorage";
 
-function App() {
-  return (
-    <Switch>
-      <Route path="/" component={Homepage} exact />
-    </Switch>
-  );
+class App extends Component {
+    componentDidMount() {
+        const {getMe} = this.props;
+        getMe(getToken());
+    }
+
+    render() {
+        const {isAuthenticated} = this.props;
+        console.log("App.js " + isAuthenticated);
+        return (
+            <Route isAuthenticated={isAuthenticated}/>
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.authReducer.isAuthenticated,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    getMe: (token) => dispatch(authActions.getMe(token))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
