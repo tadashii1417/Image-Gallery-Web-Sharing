@@ -30,12 +30,11 @@ export const loginUser = (username, password) => (
         try {
             const data = await authService.loginUser(username, password);
             setToken(data.data.jwt);
-            console.log(data.data);
             dispatch({type: actionTypes.AUTH_SUCCESS, payload: data.data.user});
-            return false;
+            return null;
         } catch (e) {
             dispatch({type: actionTypes.AUTH_FAIL});
-            return true;
+            return e.response.data.message;
         }
     }
 );

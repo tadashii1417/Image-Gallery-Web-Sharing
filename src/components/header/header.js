@@ -10,6 +10,7 @@ import 'antd/es/icon/style/index.css';
 import styles from "./header.module.css";
 import * as authActions from '../../store/actions/auth.action';
 import axios from "../../axios";
+import {withRouter} from 'react-router-dom';
 
 const defaultAvatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
 const baseImage = "http://localhost/web/backend";
@@ -17,7 +18,8 @@ const baseImage = "http://localhost/web/backend";
 class Header extends Component {
     state = {
         showSideNav: false,
-        categories: []
+        categories: [],
+        search: ""
     };
 
     componentDidMount() {
@@ -37,6 +39,17 @@ class Header extends Component {
     handlerLogout = () => {
         console.log("Log out");
         this.props.logout();
+    };
+
+    handlerSearchQuery = (e) => {
+        this.setState({search: e.target.value});
+    };
+
+
+    onKeyPress = (e) => {
+        if (e.which === 13) {
+            this.props.history.push("/search?keyword=" + this.state.search);
+        }
     };
 
     rightMenu = (
@@ -79,14 +92,7 @@ class Header extends Component {
             );
         }
 
-        let AuthMenu = (
-            <div className="action-area">
-                <a className="waves-light btn submit-btn upload modal-trigger" href="#uploadModal">Submit a
-                    photo</a>
-                <a className="waves-light btn submit-btn login" href="./login">Login</a>
-                <a className="waves-light btn join-btn" href="./register">Join free</a>
-            </div>
-        );
+        let AuthMenu = "";
         let avatar = defaultAvatar;
 
         if (this.props.isAuthenticated) {
@@ -101,17 +107,30 @@ class Header extends Component {
                         <Avatar src={avatar}/>
                     </div>
                 </Dropdown>);
+        } else {
+            AuthMenu = (
+                <div className="action-area">
+                    <a className="waves-light btn submit-btn upload modal-trigger" href='/'>Submit a
+                        photo</a>
+                    <a className="waves-light btn submit-btn login" href="/login">Login</a>
+                    <a className="waves-light btn join-btn" href="/register">Join free</a>
+                </div>
+            );
         }
+
 
         return (
             <header>
                 <nav>
-                    <div className="logo">
-                        <img src={logo} alt="logo"/>
-                    </div>
+                    <a href="/">
+                        <div className="logo">
+                            <img src={logo} alt="logo"/>
+                        </div>
+                    </a>
                     <div className="searchbox">
                         <i className="material-icons">search</i>
-                        <input type="text" placeholder="Search Photos"/>
+                        <input type="text" placeholder="Search Photos" onChange={this.handlerSearchQuery}
+                               onKeyPress={this.onKeyPress}/>
                     </div>
                     <div className="navigation">
                         <ul>
@@ -128,7 +147,8 @@ class Header extends Component {
                     <div className="category-group">
                         <ul>
                             {this.state.categories.map(cat => (
-                                <li key={cat.id}><a href={"/category/" + cat.id}>{cat.name}</a></li>
+                                <li key={cat.id}><a href={"/category/" + cat.id + "?name=" + cat.name}>{cat.name}</a>
+                                </li>
                             ))}
                         </ul>
                     </div>
@@ -147,4 +167,4 @@ const mapDispatchToProps = (dispatch) => ({
     logout: () => dispatch(authActions.logout()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

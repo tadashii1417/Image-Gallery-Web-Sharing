@@ -23,7 +23,7 @@ class Homepage extends Component {
             <div>
                 <Header/>
                 <Welcome/>
-                <ImageList images={this.state.images}/>
+                <ImageList images={this.state.images} title={true}/>
                 <Footer/>
             </div>
         );

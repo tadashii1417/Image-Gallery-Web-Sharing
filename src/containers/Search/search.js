@@ -3,18 +3,35 @@ import Header from '../../components/header/header';
 import ImageList from '../ImageList/ImageList';
 import Footer from '../../components/footer/footer';
 import axios from "../../axios";
-import styles from './category.module.css';
+import styles from './search.module.css';
 import {Result, Button} from 'antd';
 
-class Category extends Component {
+class Search extends Component {
     state = {
         images: []
     };
 
-    componentDidMount() {
-        const id = this.props.match.params.id;
-        axios.get("/image/get_all_image_by_category.php?id=" + id)
+    componentDidUpdate() {
+        const query = new URLSearchParams(this.props.location.search);
+        const keyword = query.get('keyword');
+        axios.get("/image/search.php?keyword=" + keyword)
             .then(res => {
+                console.log(res);
+                if (res.data.images === "") {
+                    this.setState({images: []});
+                } else {
+                    this.setState({images: res.data.images});
+                }
+            })
+            .catch(err => console.log(err.message));
+    }
+
+    componentDidMount() {
+        const query = new URLSearchParams(this.props.location.search);
+        const keyword = query.get('keyword');
+        axios.get("/image/search.php?keyword=" + keyword)
+            .then(res => {
+                console.log(res);
                 if (res.data.images === "") {
                     this.setState({images: []});
                 } else {
@@ -26,20 +43,20 @@ class Category extends Component {
 
     render() {
         const query = new URLSearchParams(this.props.location.search);
-        const categoryName = query.get('name');
+        const keyword = query.get('keyword');
         let images = "";
         if (this.state.images.length === 0) {
             images = <Result
                 status="404"
                 title="404"
-                subTitle="Sorry, this category have no images."
+                subTitle={"Sorry, no image result for keyword: " + keyword}
                 extra={<Button type="primary">Back Home</Button>}
             />;
         } else {
             images = (
                 <div className={styles.title}>
-                    <h4 className="heading-search">{categoryName}</h4>
-                    <div className={styles.description}>This is all images in {categoryName} category !</div>
+                    <h4 className="heading-search">{"Result for \"" + keyword + "\""}</h4>
+                    <div className={styles.description}>This is search result base on description!</div>
                     <ImageList images={this.state.images} title={false}/>
                 </div>
             );
@@ -54,4 +71,4 @@ class Category extends Component {
     }
 }
 
-export default Category;
+export default Search;

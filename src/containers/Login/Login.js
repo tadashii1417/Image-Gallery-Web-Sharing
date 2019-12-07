@@ -9,7 +9,7 @@ import {connect} from "react-redux";
 
 class NormalLoginForm extends Component {
     state = {
-        error: false
+        error: null
     };
 
     handleSubmit = e => {
@@ -30,7 +30,7 @@ class NormalLoginForm extends Component {
         }
         let error = "";
         if (this.state.error) {
-            error = <Alert message="Username/Password is not correct !" type="error" showIcon/>
+            error = <Alert message={this.state.error} type="error" showIcon/>
         }
         return (
             <div className="login-form-container">

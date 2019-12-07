@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import '../../style/register.css';
 import '../../style/registerMedia.css';
 import logo from "../../assets/image/logo.png";
-import {Input, Form, Button, Alert} from 'antd';
+import {Input, Form, Button, Alert, message} from 'antd';
+import 'antd/es/message/style/index.css';
 import {Redirect} from 'react-router-dom';
 import axios from "../../axios";
 
@@ -15,11 +16,15 @@ class Register extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
+        const key = 'updatable';
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 axios.post('/user/create.php', values)
                     .then(res => {
-                        alert('User have been created.');
+                        message.loading({ content: 'Loading...', key });
+                        setTimeout(() => {
+                            message.success({ content: 'Your account has been created !', key, duration: 2 });
+                        }, 1000);
                         this.setState({created: true});
                     })
                     .catch(err => {

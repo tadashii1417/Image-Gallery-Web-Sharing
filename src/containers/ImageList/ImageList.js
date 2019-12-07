@@ -5,9 +5,8 @@ class ImageList extends Component {
     render() {
         return (
             <div style={{margin: '50px 0'}}>
-                <div className="session-title">
-                    <h4>Our stunning images</h4>
-                </div>
+                {this.props.title ?
+                    <div className="session-title"><h4>Our stunning images</h4></div> : ""}
 
                 <div className='image-gallery'>
                     {
