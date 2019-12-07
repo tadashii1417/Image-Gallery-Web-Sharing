@@ -11,7 +11,6 @@ export function loginUser(username, password) {
         username: username,
         password: password
     };
-    console.log(data);
     return axios.post(`/auth/login.php`, data, config);
 }
 

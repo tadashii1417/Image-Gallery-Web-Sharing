@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {Form, Icon, Input, Checkbox, Alert} from 'antd';
 import logo from "../../assets/image/logo.png";
 import {Redirect} from 'react-router-dom';
-import * as authService from '../../services/auth.service';
 import * as authActions from '../../store/actions/auth.action';
 import "antd/es/alert/style/index.css";
 import "./Login.css";
@@ -70,7 +69,7 @@ class NormalLoginForm extends Component {
                         <button className="waves-light btn join-btn login-form-button"
                                 onClick={this.handleSubmit}>Login
                         </button>
-                        Or <a href="/">Register now!</a>
+                        Or <a href="/register">Register now!</a>
                     </Form.Item>
                 </Form>
             </div>

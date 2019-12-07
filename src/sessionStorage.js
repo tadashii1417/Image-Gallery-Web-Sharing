@@ -9,3 +9,19 @@ export function getToken() {
 export function clearToken() {
     return localStorage.clear();
 }
+
+export function getImageBase() {
+    return "http://localhost/web/backend";
+}
+
+export function getDefaultAvatar() {
+    return "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
+}
+
+export function toDataURL(url) {
+    return fetch(url).then((response) => {
+        return response.blob();
+    }).then(blob => {
+        return URL.createObjectURL(blob);
+    });
+}

@@ -1,8 +1,11 @@
+import React from "react";
 import {Route, Switch, BrowserRouter} from "react-router-dom";
 import Homepage from "../containers/Homepage/Homepage";
 import LoginForm from "../containers/Login/Login";
-import React from "react";
+import Register from "../containers/Register/Register";
 import NotFound from '../components/notFound/notFound';
+import Category from "../containers/Category/category";
+
 
 export default function (props) {
     const {isAuthenticated} = props;
@@ -11,6 +14,8 @@ export default function (props) {
             <Switch>
                 <Route path="/" component={Homepage} isAuthenticated={isAuthenticated} exact/>
                 <Route path="/login" component={LoginForm} exact/>
+                <Route path="/register" component={Register} exact/>
+                <Route path="/category/:id" component={Category} exact/>
                 <Route component={NotFound}/>
             </Switch>
         </BrowserRouter>

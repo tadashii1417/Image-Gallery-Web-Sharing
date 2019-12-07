@@ -9,6 +9,7 @@ import 'antd/es/avatar/style/index.css';
 import 'antd/es/icon/style/index.css';
 import styles from "./header.module.css";
 import * as authActions from '../../store/actions/auth.action';
+import axios from "../../axios";
 
 const defaultAvatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
 const baseImage = "http://localhost/web/backend";
@@ -16,7 +17,18 @@ const baseImage = "http://localhost/web/backend";
 class Header extends Component {
     state = {
         showSideNav: false,
+        categories: []
     };
+
+    componentDidMount() {
+        axios.get('/category/get_all_category.php')
+            .then(res => {
+                this.setState({categories: res.data.categories});
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
+    }
 
     handleShowSideNav = () => {
         this.setState((prev) => ({showSideNav: !prev.showSideNav}));
@@ -79,7 +91,6 @@ class Header extends Component {
 
         if (this.props.isAuthenticated) {
             const {user} = this.props;
-            console.log(user);
             if (user.avatarUrl !== "null") {
                 avatar = baseImage + user.avatarUrl;
             }
@@ -116,21 +127,9 @@ class Header extends Component {
                 <div className="category">
                     <div className="category-group">
                         <ul>
-                            <li><a href="/">Wallpapers</a></li>
-                            <li><a href="/">Nature</a></li>
-                            <li><a href="/">Architecture</a></li>
-                            <li><a href="/">Business</a></li>
-                            <li><a href="/">Film</a></li>
-                            <li><a href="/">Animal</a></li>
-                            <li><a href="/">Travel</a></li>
-                            <li><a href="/">Food</a></li>
-                            <li><a href="/">Fashion</a></li>
-                            <li><a href="/">Event</a></li>
-                            <li><a href="/">Art</a></li>
-                            <li><a href="/">Culture</a></li>
-                            <li><a href="/">Health</a></li>
-                            <li><a href="/">People</a></li>
-                            <li><a href="/">Experimental</a></li>
+                            {this.state.categories.map(cat => (
+                                <li key={cat.id}><a href={"/category/" + cat.id}>{cat.name}</a></li>
+                            ))}
                         </ul>
                     </div>
                 </div>

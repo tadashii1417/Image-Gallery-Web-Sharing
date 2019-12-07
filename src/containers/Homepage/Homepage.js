@@ -3,17 +3,27 @@ import Header from '../../components/header/header';
 import Welcome from '../../components/welcome/welcome';
 import ImageList from '../ImageList/ImageList';
 import Footer from '../../components/footer/footer';
+import axios from "../../axios";
 
 class Homepage extends Component {
-    render() {
-        console.log("Props");
-        console.log(this.props);
+    state = {
+        images: []
+    };
 
+    componentDidMount() {
+        axios.get("/image/get_all_images.php")
+            .then(res => {
+                this.setState({images: res.data.images});
+            })
+            .catch(err => console.log(err.message));
+    }
+
+    render() {
         return (
             <div>
                 <Header/>
                 <Welcome/>
-                <ImageList/>
+                <ImageList images={this.state.images}/>
                 <Footer/>
             </div>
         );
