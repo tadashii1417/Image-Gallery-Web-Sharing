@@ -9,13 +9,16 @@ import * as authActions from './store/actions/auth.action';
 import {getToken} from "./sessionStorage";
 
 class App extends Component {
-    componentDidMount() {
+
+
+    async componentDidMount() {
         const {getMe} = this.props;
-        getMe(getToken());
+        await getMe(getToken());
     }
 
     render() {
         const {isAuthenticated} = this.props;
+        console.log("app.js" + isAuthenticated);
         return (
             <Route isAuthenticated={isAuthenticated}/>
         );

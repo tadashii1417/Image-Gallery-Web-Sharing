@@ -4,13 +4,22 @@ import styles from './UserProfile.module.css';
 import {Button, Icon, Tabs} from 'antd';
 import 'antd/es/tabs/style/index.css';
 import UserImages from "../../components/UserImages/UserImages";
+import Collections from "../../components/Collections/Collections";
+import {connect} from "react-redux";
+import {getDefaultAvatar, getImageBase} from "../../sessionStorage";
 
 const {TabPane} = Tabs;
 
 class UserProfile extends React.Component {
-    avatar = "https://anhdephd.com/wp-content/uploads/2019/07/hinh-anh-avatar-chibi-cute-de-thuong-dep-nhat-cho-facebook-15.jpg";
 
     render() {
+        const {user} = this.props;
+        let avatar = "";
+        if (user.avatarUrl == "null") {
+            avatar = getDefaultAvatar();
+        } else {
+            avatar = getImageBase() + user.avatarUrl;
+        }
         return (
             <div className={styles.profile}>
                 <Header/>
@@ -18,15 +27,15 @@ class UserProfile extends React.Component {
                     <div className={styles.userinfo}>
 
                         <div className={styles.left}>
-                            <img src={this.avatar} alt="avatar"/>
+                            <img src={avatar} alt="avatar"/>
                         </div>
                         <div className={styles.right}>
-                            <h4>Duong Van Truong</h4>
+                            <h4>{user.firstname + " " + user.lastname}</h4>
                             <div className={styles.inforitem}><Icon type="fire" theme="twoTone"/>
-                                <span>Username: </span> tadashii
+                                <span>Username: </span> {user.username}
                             </div>
                             <div className={styles.inforitem}><Icon type="smile" theme="twoTone"/>
-                                <span>Email : </span> tadashii1417@gmail.com
+                                <span>Email : </span> {user.email}
                             </div>
                             <div style={{alignItems: "center"}}>
                                 <Button type="default" icon="setting">Edit profile</Button>
@@ -66,7 +75,7 @@ class UserProfile extends React.Component {
                                 </span>
                             }
                             key="3">
-                            Collections
+                            <Collections/>
                         </TabPane>
                     </Tabs>
                 </div>
@@ -74,4 +83,8 @@ class UserProfile extends React.Component {
     }
 }
 
-export default UserProfile;
+const mapStateToProps = (state) => ({
+    user: state.authReducer.user
+});
+
+export default connect(mapStateToProps, null)(UserProfile);

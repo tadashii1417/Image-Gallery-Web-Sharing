@@ -1,14 +1,14 @@
 import React from 'react';
-import {getDefaultAvatar, getImageBase } from "../../sessionStorage";
+import {getDefaultAvatar, getImageBase, toDataURL} from "../../sessionStorage";
 
-// async function download(url) {
-//     const a = document.createElement("a");
-//     a.href = await toDataURL(url);
-//     a.download = "myImage.png";
-//     document.body.appendChild(a);
-//     a.click();
-//     document.body.removeChild(a);
-// }
+async function download(id) {
+    const a = document.createElement("a");
+    a.href = await toDataURL(id);
+    a.download = "myImage.jpg";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
 
 export default function (props) {
     const {imageInfo} = props;
@@ -40,11 +40,11 @@ export default function (props) {
                             <span>{imageInfo.owner[0].lastname}</span>
                         </div>
                         <div className="img-user-right">
-                            <a href={getImageBase() + imageInfo.url} download={"filename.png"} target={"_blank"}>
-                                <button>
-                                    <i className="fa fa-download"></i>
-                                </button>
-                            </a>
+                            {/*<a href={getImageBase() + imageInfo.url} download={"filename.png"} target={"_blank"}>*/}
+                            <button onClick={() => download(imageInfo.id)}>
+                                <i className="fa fa-download"></i>
+                            </button>
+                            {/*</a>*/}
                         </div>
                     </div>
                 </div>

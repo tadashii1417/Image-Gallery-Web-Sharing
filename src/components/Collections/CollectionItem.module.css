@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item {
+    width: 130px;
+    padding: 20px;
+    text-align: center;
+}
+
+.item i {
+    font-size: 50px;
+}
