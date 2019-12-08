@@ -1,6 +1,5 @@
-import axios from 'axios';
+import axios from "axios";
 
 export default axios.create({
-    baseURL: "http://localhost/web/backend/api"
+  baseURL: "http://localhost:80/Gallery-Web-Back-End/api"
 });
-
