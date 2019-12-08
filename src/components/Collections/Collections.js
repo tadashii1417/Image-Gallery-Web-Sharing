@@ -26,10 +26,8 @@ class Collections extends React.Component {
             <div className={styles.container}>
                 {this.state.collections.map(col => <CollectionsItem collection={col} key={col.id}/>
                 )}
-                <Route path={"/profile"} render={() => "heelo"} exact/>
-                <Route path={"/1"} render={() => "1"} exact/>
-                <Route path="/2" render={() => "2"} exact/>
-                <Route path="/3" render={() => "3"} exact/>
+                <Route path="/profile/:id" render={() => <CollectionImageList/>} exact/>
+                <Route path={"/profile"} render={() => <div>Click on collection to view images.</div>} exact/>
             </div>
 
         );
