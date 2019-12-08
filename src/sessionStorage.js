@@ -1,13 +1,13 @@
 export function setToken(token) {
-    localStorage.setItem("x-access-token", token);
+  localStorage.setItem("x-access-token", token);
 }
 
 export function getToken() {
-    return localStorage.getItem("x-access-token");
+  return localStorage.getItem("x-access-token");
 }
 
 export function clearToken() {
-    return localStorage.clear();
+  return localStorage.clear();
 }
 
 export function getImageBase() {
@@ -15,7 +15,7 @@ export function getImageBase() {
 }
 
 export function getDefaultAvatar() {
-    return "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
+  return "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
 }
 
 
