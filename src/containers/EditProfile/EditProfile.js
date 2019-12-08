@@ -3,6 +3,7 @@ import Header from "../../components/header/header";
 import {Icon, Tabs} from 'antd';
 import styles from './EditProfile.module.css';
 import EditForm from "../../components/EditBasic/EditBasic";
+import ChangePass from "../../components/ChangePassword/ChangePassword";
 
 const {TabPane} = Tabs;
 
@@ -29,7 +30,7 @@ class EditProfile extends React.Component {
                                 </span>
                     }
                     key="2">
-                    Change password
+                    <ChangePass/>
                 </TabPane>
                 <TabPane
                     tab={

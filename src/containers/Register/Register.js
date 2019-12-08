@@ -164,7 +164,7 @@ class Register extends Component {
                                                     {getFieldDecorator('password', {
                                                         rules: [{
                                                             required: true,
-                                                            message: 'Please input your username!'
+                                                            message: 'Please input your password!'
                                                         }, {
                                                             min: 6,
                                                             message: 'Password must have at least 6 characters.'

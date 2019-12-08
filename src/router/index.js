@@ -10,6 +10,7 @@ import Search from "../containers/Search/search";
 import PrivateRoute from "./PrivateRoute";
 import UserProfile from "../containers/UserProfile/UserProfile";
 import EditProfile from "../containers/EditProfile/EditProfile";
+import UploadImage from "../containers/UploadImage/UploadImage";
 
 
 export default function (props) {
@@ -25,6 +26,7 @@ export default function (props) {
                 <Route path="/admin" component={Admin} exact/>
                 <PrivateRoute path="/profile" isAuthenticated={isAuthenticated} component={UserProfile}/>
                 <PrivateRoute path="/edit-profile" isAuthenticated={isAuthenticated} component={EditProfile}/>
+                <PrivateRoute path="/submit-photo" isAuthenticated={isAuthenticated} component={UploadImage}/>
                 <Route component={NotFound}/>
             </Switch>
         </BrowserRouter>
