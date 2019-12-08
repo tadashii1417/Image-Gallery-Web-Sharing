@@ -16,11 +16,12 @@ class Admin extends React.Component {
         super(props);
         this.state = {
             collapsed: false,
-            columns: [
+            menuKey: "1",
+            imageColumns: [
               {
                 title: 'ID',
                 dataIndex: 'id',
-                render: text => <a>{text}</a>
+                render: text => <a href="#!">{text}</a>
               },
               {
                 title: 'Size',
@@ -46,12 +47,12 @@ class Admin extends React.Component {
               {
                 title: 'Category ID',
                 dataIndex: 'category_id',
-                render: text => <a>{text}</a>
+                render: text => <a href="#!">{text}</a>
               },
               {
                 title: 'Author',
                 dataIndex: 'user_id',
-                render: text => <a>{text}</a>
+                render: text => <a href="#!">{text}</a>
               },
               {
                 title: 'Operations',
@@ -59,10 +60,77 @@ class Admin extends React.Component {
                 render: (text, record) =>
                   <Button type="primary" onClick={() => {this.handleConfirm(record.id)}}>Approve</Button>
               },
+            ],
+            userColumns: [
+              {
+                title: 'ID',
+                dataIndex: 'id',
+                render: text => <a href="#!">{text}</a>
+              },
+              {
+                title: 'Username',
+                dataIndex: 'username',
+                render: text => <a href="#!">{text}</a>
+              },
+              {
+                title: 'Email',
+                dataIndex: 'email',
+                render: text => <a href="#!">{text}</a>
+              },
+              {
+                title: 'First name',
+                dataIndex: 'firstname',
+              },
+              {
+                title: 'Last name',
+                dataIndex: 'lastname',
+              },
+              {
+                title: 'Status',
+                dataIndex: 'status',
+                render: text => <a href="#!">{text}</a>
+              },
+              {
+                title: 'Operations',
+                dataIndex: 'operations',
+                render: (text, record) => <Button type="danger"
+                onClick={() => this.handleBlock(record.id, record.status)}>{record.status === "1" ? "Block" : "Unblock"}</Button>
+              },              
             ]
-        }
+        };
     }
 
+    async handleBlock(id, status) {
+      const users = [...this.state.users];
+      try {
+        let url = "";
+        if (status === "1") {
+          url = "http://localhost/web/backend/api/user/ban_user.php";
+        } else {
+          url = "http://localhost/web/backend/api/user/unban_user.php";
+        }
+        let res = await fetch(url, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'HTTP_ORIGIN': 'localhost:3000'
+          },
+          body: JSON.stringify({ jwt, id })
+        });
+        if (res.status === 200) {
+          let objIndex = users.findIndex(obj => obj.id === id);
+          users[objIndex].status = (status === "1") ? "0" : "1";
+          this.setState({
+            users
+          });
+          message.success("User status changed.")
+        } else {
+          message.error("Unknown error.")        
+        }
+      } catch(err) {
+        message.error("Network error!")
+      }
+    }
     async handleConfirm(id) {
       const images = [...this.state.images];
       try {
@@ -85,6 +153,30 @@ class Admin extends React.Component {
       }
     }
     componentDidMount() {
+        fetch("http://localhost/web/backend/api/user/all.php", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'HTTP_ORIGIN': 'localhost:3000'
+            },
+        })
+          .then(res => res.json())
+          .then(
+            (result) => {
+              console.log(result);
+              this.setState({
+                users: result.users
+              });
+            },
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            (error) => {
+              this.setState({
+                error
+              });
+            }
+          )
         fetch("http://localhost/web/backend/api/image/get_all_unconfirmed_images.php", {
             method: 'POST',
             headers: {
@@ -97,7 +189,6 @@ class Admin extends React.Component {
           .then(
             (result) => {
               this.setState({
-                isLoaded: true,
                 images: result.images
               });
             },
@@ -106,7 +197,6 @@ class Admin extends React.Component {
             // exceptions from actual bugs in components.
             (error) => {
               this.setState({
-                isLoaded: true,
                 error
               });
             }
@@ -118,6 +208,12 @@ class Admin extends React.Component {
         this.setState({collapsed});
     };
 
+    handleMenuClicked(item) {
+      this.setState({
+        menuKey: item.key
+      });
+      console.log(this.state.menuKey);
+    }
     render() {
         return (
           <Layout>
@@ -130,7 +226,7 @@ class Admin extends React.Component {
               }}
             >
               <div className="logo" />
-              <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+              <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} onClick={this.handleMenuClicked.bind(this)}>
                 <Menu.Item key="1">
                   <Icon type="picture" />
                   <span className="nav-text">Confirm images</span>
@@ -144,7 +240,9 @@ class Admin extends React.Component {
             <Layout style={{ marginLeft: 200 }}>
               <Header style={{ background: '#fff', padding: 0 }} />
               <Content style={{ margin: '80px 16px 0', overflow: 'initial' }}>
-                  <Table dataSource={this.state.images} rowKey="id" columns={this.state.columns}>
+                  <Table dataSource={this.state.menuKey === '1' ? this.state.images : this.state.users}
+                  rowKey="id"
+                  columns={this.state.menuKey === '1' ? this.state.imageColumns : this.state.userColumns}>
                   </Table>
               </Content>
               <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
