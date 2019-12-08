@@ -10,7 +10,7 @@ import 'antd/es/icon/style/index.css';
 import styles from "./header.module.css";
 import * as authActions from '../../store/actions/auth.action';
 import axios from "../../axios";
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 
 const defaultAvatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
 const baseImage = "http://localhost/web/backend";
@@ -54,20 +54,21 @@ class Header extends Component {
 
     rightMenu = (
         <Menu className={styles.menu} selectedKeys={[]}>
-            <Menu.Item key="userCenter">
-                <Icon type="user"/>
-                <span>Account Center</span>
+            <Menu.Item key="triggerError" className={styles.menuItem}>
+                <Link to={"/profile"}>
+                    <Icon type="solution"/>
+                    <span>My Profile</span>
+                </Link>
             </Menu.Item>
-            <Menu.Item key="userinfo">
-                <Icon type="setting"/>
-                <span>Account Setting</span>
-            </Menu.Item>
-            <Menu.Item key="triggerError">
-                <Icon type="solution"/>
-                <span>Profile</span>
+
+            <Menu.Item key="userinfo" className={styles.menuItem}>
+                <Link to={"/submit-photo"}>
+                    <Icon type="setting"/>
+                    <span>Submit a photo</span>
+                </Link>
             </Menu.Item>
             <Menu.Divider/>
-            <Menu.Item key="logout" onClick={this.handlerLogout}>
+            <Menu.Item key="logout" onClick={this.handlerLogout} className={styles.menuItem}>
                 <Icon type="logout"/>
                 <span>Logout</span>
             </Menu.Item>
@@ -147,7 +148,8 @@ class Header extends Component {
                     <div className="category-group">
                         <ul>
                             {this.state.categories.map(cat => (
-                                <li key={cat.id}><a href={"/category/" + cat.id + "?name=" + cat.name}>{cat.name}</a>
+                                <li key={cat.id}>
+                                    <Link to={"/category/" + cat.id + "?name=" + cat.name}>{cat.name}</Link>
                                 </li>
                             ))}
                         </ul>

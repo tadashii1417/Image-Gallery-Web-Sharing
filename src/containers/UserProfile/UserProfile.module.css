@@ -1,0 +1,51 @@
+.profile header {
+    position: relative;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    margin-top: 40px;
+}
+.container2 {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    margin-top: 50px;
+}
+
+.left {
+    flex: 30%;
+    align-content: flex-end;
+}
+
+.left img {
+    width: 200px;
+    border-radius: 50%;
+}
+
+.right {
+    flex: 70%;
+    padding-left: 40px;
+}
+
+.right h4 {
+    font-weight: bold;
+}
+
+.userinfo {
+    display: flex;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.right div {
+    padding: 10px;
+}
+
+.inforitem span {
+    width: 30px;
+    color: #0D47A1;
+    margin: 0 10px;
+}

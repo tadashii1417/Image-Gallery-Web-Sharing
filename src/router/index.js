@@ -7,6 +7,8 @@ import NotFound from '../components/notFound/notFound';
 import Category from "../containers/Category/category";
 import Admin from "../containers/Admin/Admin";
 import Search from "../containers/Search/search";
+import PrivateRoute from "./PrivateRoute";
+import UserProfile from "../containers/UserProfile/UserProfile";
 
 
 export default function (props) {
@@ -20,6 +22,7 @@ export default function (props) {
                 <Route path="/category/:id" component={Category} exact/>
                 <Route path="/search" component={Search} exact/>
                 <Route path="/admin" component={Admin} exact/>
+                <PrivateRoute path="/profile" isAuthenticated={isAuthenticated} component={UserProfile}/>
                 <Route component={NotFound}/>
             </Switch>
         </BrowserRouter>

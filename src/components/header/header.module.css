@@ -2,6 +2,9 @@
     margin-right: 8px;
 }
 
+.menuItem i{
+   margin-right: 10px;
+}
 
 .header {
     position: relative;
