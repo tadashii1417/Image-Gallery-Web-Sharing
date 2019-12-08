@@ -183,7 +183,7 @@ class Admin extends React.Component {
                 'Content-Type': 'application/json',
                 'HTTP_ORIGIN': 'localhost:3000'
             },
-            body: JSON.stringify({ 'jwt': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9leGFtcGxlLm9yZyIsImF1ZCI6Imh0dHA6XC9cL2V4YW1wbGUuY29tIiwiaWF0IjoxMzU2OTk5NTI0LCJuYmYiOjEzNTcwMDAwMDAsImRhdGEiOnsiaWQiOiIxIiwidXNlcm5hbWUiOiJ1c2VybmFtZSIsImVtYWlsIjoiZmlyc3RsYXN0QGdtYWlsLmNvbSIsImZpcnN0bmFtZSI6ImZpcnN0IiwibGFzdG5hbWUiOiJsYXN0IiwiYXZhdGFyVXJsIjoiXC9vcHRcL2xhbXBwXC9odGRvY3NcL3dlYlwvYmFja2VuZFwvdXBsb2FkXC9hdmF0YXJfcnJLME9IIiwicm9sZSI6ImFkbWluIiwic3RhdHVzIjoiMSJ9fQ.dv3xuRlXuZo8N2c9BOzHksc80GnKhjDrveWvuEuYYkE'})
+            body: JSON.stringify({ 'jwt': jwt})
         })
           .then(res => res.json())
           .then(
