@@ -11,7 +11,7 @@ export function clearToken() {
 }
 
 export function getImageBase() {
-  return "http://localhost:80/Gallery-Web-Back-End";
+  return "http://localhost:80/Gallery-Web-Back-End/";
 }
 
 export function getDefaultAvatar() {
