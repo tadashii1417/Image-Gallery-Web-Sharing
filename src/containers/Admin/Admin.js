@@ -6,7 +6,7 @@ import 'antd/es/icon/style/index.css';
 import 'antd/es/layout/style/index.css';
 import 'antd/es/table/style/index.css';
 import 'antd/es/button/style/index.css';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 
 const { Header, Content, Footer, Sider } = Layout;
 
