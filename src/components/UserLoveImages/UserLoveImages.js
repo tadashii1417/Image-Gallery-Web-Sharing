@@ -1,29 +1,17 @@
-import React from 'react';
-import {withRouter} from "react-router-dom";
+import React from "react";
 import axios from "../../axios";
 import {Result} from "antd";
 import ImageList from "../../containers/ImageList/ImageList";
+import {connect} from 'react-redux';
 
-class CollectionImageList extends React.Component {
+class UserLoveImages extends React.Component {
     state = {
         images: []
     };
 
     componentDidMount() {
-        const id = this.props.match.params.id;
-        axios.get("/image/get_images_of_collection.php?collection_id=" + id)
-            .then(res => {
-                if (res.data.images === "") {
-                    this.setState({images: []});
-                } else {
-                    this.setState({images: res.data.images});
-                }
-            })
-            .catch(err => console.log(err.message));
-    }
-    componentDidUpdate() {
-        const id = this.props.match.params.id;
-        axios.get("/image/get_images_of_collection.php?collection_id=" + id)
+        const id = this.props.user.id;
+        axios.get("/image/get_liked_images_of_user.php?user_id=" + id)
             .then(res => {
                 if (res.data.images === "") {
                     this.setState({images: []});
@@ -40,7 +28,7 @@ class CollectionImageList extends React.Component {
             images = <Result
                 status="404"
                 title="404"
-                subTitle={"This collection have no images. !"}
+                subTitle={"You haven't love any image yet !"}
             />;
         } else {
             images = (
@@ -51,4 +39,8 @@ class CollectionImageList extends React.Component {
     }
 }
 
-export default withRouter(CollectionImageList);
+const mapStateToProps = (state) => ({
+    user: state.authReducer.user
+});
+
+export default connect(mapStateToProps, null)(UserLoveImages);

@@ -7,6 +7,7 @@ import UserImages from "../../components/UserImages/UserImages";
 import Collections from "../../components/Collections/Collections";
 import {connect} from "react-redux";
 import {getDefaultAvatar, getImageBase} from "../../sessionStorage";
+import UserLoveImages from "../../components/UserLoveImages/UserLoveImages";
 
 const {TabPane} = Tabs;
 
@@ -65,7 +66,7 @@ class UserProfile extends React.Component {
                                 </span>
                             }
                             key="2">
-                            Loves
+                            <UserLoveImages/>
                         </TabPane>
                         <TabPane
                             tab={

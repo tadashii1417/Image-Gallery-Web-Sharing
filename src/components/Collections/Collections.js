@@ -1,5 +1,5 @@
 import React from "react";
-import {Icon} from "antd";
+import {Alert, Icon} from "antd";
 import CollectionsItem from "./CollectionItem";
 import styles from './CollectionItem.module.css';
 import axios from "../../axios";
@@ -23,13 +23,15 @@ class Collections extends React.Component {
 
     render() {
         return (
-            <div className={styles.container}>
-                {this.state.collections.map(col => <CollectionsItem collection={col} key={col.id}/>
-                )}
-                <Route path={"/profile"} render={() => "heelo"} exact/>
-                <Route path={"/1"} render={() => "1"} exact/>
-                <Route path="/2" render={() => "2"} exact/>
-                <Route path="/3" render={() => "3"} exact/>
+            <div>
+                <div className={styles.container}>
+                    {this.state.collections.map(col => <CollectionsItem collection={col} key={col.id}/>
+                    )}
+                </div>
+                <Route path={"/profile/:id"} render={() => <CollectionImageList/>} exact/>
+                <Route path={"/profile"}
+                       render={() => <Alert style={{margin: '50px'}} message="Click on the collection to view images" type="info" showIcon/>}
+                       exact/>
             </div>
 
         );
