@@ -10,15 +10,18 @@ import {getToken} from "./sessionStorage";
 
 class App extends Component {
 
-
     async componentDidMount() {
         const {getMe} = this.props;
         await getMe(getToken());
     }
 
     render() {
-        const {isAuthenticated} = this.props;
-        console.log("app.js" + isAuthenticated);
+        const {isAuthenticated, isLoading} = this.props;
+
+        if (isLoading) {
+            return <div>Loading ...</div>;
+        }
+
         return (
             <Route isAuthenticated={isAuthenticated}/>
         );
@@ -27,6 +30,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.authReducer.isAuthenticated,
+    isLoading: state.uiReducer.isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
