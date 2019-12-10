@@ -12,7 +12,6 @@ import UserProfile from "../containers/UserProfile/UserProfile";
 import EditProfile from "../containers/EditProfile/EditProfile";
 import UploadImage from "../containers/UploadImage/UploadImage";
 
-
 export default function (props) {
     const {isAuthenticated} = props;
     return (
@@ -24,6 +23,7 @@ export default function (props) {
                 <Route path="/category/:id" component={Category} exact/>
                 <Route path="/search" component={Search} exact/>
                 <Route path="/admin" component={Admin} exact/>
+                {/*<Route path="/image-detail/:imageId" component={ImageDetail} exact/>*/}
                 <PrivateRoute path="/profile" isAuthenticated={isAuthenticated} component={UserProfile}/>
                 <PrivateRoute path="/edit-profile" isAuthenticated={isAuthenticated} component={EditProfile}/>
                 <PrivateRoute path="/submit-photo" isAuthenticated={isAuthenticated} component={UploadImage}/>

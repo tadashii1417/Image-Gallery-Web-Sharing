@@ -17,7 +17,7 @@ class UserProfile extends React.Component {
     render() {
         const {user} = this.props;
         let avatar = "";
-        if (user.avatarUrl == "null") {
+        if (user.avatarUrl === "null") {
             avatar = getDefaultAvatar();
         } else {
             avatar = getImageBase() + user.avatarUrl;

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ImageCard from '../../components/imageCard/imageCard';
+import {withRouter} from "react-router-dom";
 
 class ImageList extends Component {
     render() {
@@ -11,7 +12,7 @@ class ImageList extends Component {
                 <div className='image-gallery'>
                     {
                         this.props.images.map(image => (
-                            <ImageCard imageInfo={image} key={image.id}/>
+                            <ImageCard imageInfo={image} key={image.id} {...this.props}/>
                         ))
                     }
                 </div>
@@ -20,4 +21,4 @@ class ImageList extends Component {
     }
 }
 
-export default ImageList;
+export default withRouter(ImageList);
