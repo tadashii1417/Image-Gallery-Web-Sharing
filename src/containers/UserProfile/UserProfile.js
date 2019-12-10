@@ -8,6 +8,7 @@ import Collections from "../../components/Collections/Collections";
 import {connect} from "react-redux";
 import {getDefaultAvatar, getImageBase} from "../../sessionStorage";
 import UserLoveImages from "../../components/UserLoveImages/UserLoveImages";
+import {Link} from "react-router-dom";
 
 const {TabPane} = Tabs;
 
@@ -39,7 +40,9 @@ class UserProfile extends React.Component {
                                 <span>Email : </span> {user.email}
                             </div>
                             <div style={{alignItems: "center"}}>
-                                <Button type="default" icon="setting">Edit profile</Button>
+                                <Link to={"/edit-profile"}>
+                                    <Button type="default" icon="setting">Edit profile</Button>
+                                </Link>
                             </div>
                         </div>
 
