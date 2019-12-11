@@ -226,7 +226,7 @@ class Header extends Component {
                         </ul>
                     </div>
                     {AuthMenu}
-                    <i className="fa fa-bars" onClick={this.handleShowSideNav}></i>
+                    <i className="fa fa-bars" onClick={this.handleShowSideNav}/>
                 </nav>
                 {sideNav}
                 <div className="category">

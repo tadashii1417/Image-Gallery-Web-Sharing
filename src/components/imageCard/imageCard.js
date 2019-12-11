@@ -1,32 +1,20 @@
 import React from 'react';
-import {Modal, Descriptions, Divider, Button, message} from "antd";
+import {Modal, Descriptions, Divider, Button, message, Popover} from "antd";
 import 'antd/es/modal/style/index.css';
 import 'antd/es/descriptions/style/index.css';
 import 'antd/es/divider/style/index.css';
+import 'antd/es/popover/style/index.css';
 import {getDefaultAvatar, getImageBase, getToken, toDataURL} from "../../sessionStorage";
 import styles from './imageCard.module.css';
 import axios from "../../axios";
-
-async function download(image, e) {
-    e.stopPropagation();
-    const a = document.createElement("a");
-    a.href = await toDataURL(image.url);
-    a.download = "image";
-    document.body.appendChild(a);
-    a.click();
-    axios.get('/image/increase_download_times.php?id=' + image.id)
-        .then(res => {
-            image.download++;
-        })
-        .catch(err => console.log(err.message));
-    document.body.removeChild(a);
-}
+import CollectionForm from "../CollectionForm/CollectionForm";
 
 
 class ImageCard extends React.Component {
     state = {
         visible: false
     };
+
     showModal = (image) => {
         axios.get('/image/increase_view_times.php?id=' + image.id)
             .then(res => {
@@ -71,10 +59,6 @@ class ImageCard extends React.Component {
         }
     };
 
-    handleCollect = (e, image) => {
-
-    };
-
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return this.state.visible !== nextState.visible;
     }
@@ -98,7 +82,8 @@ class ImageCard extends React.Component {
                             <button style={{marginRight: '4px'}} onClick={(e) => this.handleLove(e, imageInfo)}>
                                 <i className="fa fa-heart"/>
                             </button>
-                            <button onClick={(e) => this.handleCollect(e, imageInfo)}>
+
+                            <button>
                                 <i className="fa fa-plus"/>
                                 Collect
                             </button>
@@ -121,10 +106,13 @@ class ImageCard extends React.Component {
                         <Button onClick={(e) => this.handleLove(e, imageInfo)}>
                             <i className="fa fa-heart"/>
                         </Button>
-                        <Button onClick={(e) => this.handleCollect(e, imageInfo)}>
-                            <i className="fa fa-plus"/>
-                            Collect
-                        </Button>
+                        <Popover content={<CollectionForm image_id={imageInfo.id}/>} title="Select collections" trigger="click"
+                                 placement={"bottom"}>
+                            <Button>
+                                <i className="fa fa-plus"/>
+                                Collect
+                            </Button>
+                        </Popover>
                         <Button onClick={(e) => download(imageInfo, e)}>
                             <i className="fa fa-download"/>
                         </Button>
@@ -159,5 +147,22 @@ class ImageCard extends React.Component {
         );
     }
 }
+
+
+async function download(image, e) {
+    e.stopPropagation();
+    const a = document.createElement("a");
+    a.href = await toDataURL(image.url);
+    a.download = "image";
+    document.body.appendChild(a);
+    a.click();
+    axios.get('/image/increase_download_times.php?id=' + image.id)
+        .then(res => {
+            image.download++;
+        })
+        .catch(err => console.log(err.message));
+    document.body.removeChild(a);
+}
+
 
 export default ImageCard;

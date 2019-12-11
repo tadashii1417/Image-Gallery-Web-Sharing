@@ -24,22 +24,22 @@ class Category extends Component {
             .catch(err => console.log(err.message));
     }
 
-    componentDidUpdate() {
-        const id = this.props.match.params.id;
-        axios.get("/image/get_all_image_by_category.php?id=" + id)
-            .then(res => {
-                if (res.data.images === "") {
-                    this.setState({images: []});
-                } else {
-                    this.setState({images: res.data.images});
-                }
-            })
-            .catch(err => console.log(err.message));
-    }
-
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return this.props.match.params.id !== nextProps.match.params.id;
-    }
+    // componentDidUpdate() {
+    //     const id = this.props.match.params.id;
+    //     axios.get("/image/get_all_image_by_category.php?id=" + id)
+    //         .then(res => {
+    //             if (res.data.images === "") {
+    //                 this.setState({images: []});
+    //             } else {
+    //                 this.setState({images: res.data.images});
+    //             }
+    //         })
+    //         .catch(err => console.log(err.message));
+    // }
+    //
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     return this.props.match.params.id !== nextProps.match.params.id;
+    // }
 
     render() {
         const query = new URLSearchParams(this.props.location.search);
