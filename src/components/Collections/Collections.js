@@ -30,7 +30,8 @@ class Collections extends React.Component {
                 </div>
                 <Route path={"/profile/:id"} render={() => <CollectionImageList/>} exact/>
                 <Route path={"/profile"}
-                       render={() => <Alert style={{margin: '50px'}} message="Click on the collection to view images" type="info" showIcon/>}
+                       render={() => <Alert style={{margin: '50px'}} message="Click on the collection to view images"
+                                            type="info" showIcon/>}
                        exact/>
             </div>
 

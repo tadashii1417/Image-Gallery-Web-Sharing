@@ -77,7 +77,7 @@ class UploadImage extends React.Component {
                             })(
                                 <Select placeholder="Please select category">
                                     {this.state.categories.map(cat => (
-                                        <Option value={cat.id}>{cat.name}</Option>
+                                        <Option value={cat.id} key={cat.id}>{cat.name}</Option>
                                     ))}
                                 </Select>,
                             )}

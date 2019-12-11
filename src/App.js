@@ -10,9 +10,9 @@ import {getToken} from "./sessionStorage";
 
 class App extends Component {
 
-    async componentDidMount() {
+    componentDidMount() {
         const {getMe} = this.props;
-        await getMe(getToken());
+        getMe(getToken());
     }
 
     render() {
