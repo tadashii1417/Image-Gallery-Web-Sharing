@@ -18,9 +18,9 @@ export function getDefaultAvatar() {
     return "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
 }
 
-export function toDataURL(id) {
-    let url = "http://localhost/web/backend/api/image/fetch_an_image_from_server.php?id=" + id;
-    return fetch("http://localhost/web/backend/upload/images/5ddfeecaecbb4.jpg").then((response) => {
+export function toDataURL(url) {
+    let serverUrl = "http://localhost/web/backend/api/image/fetch_an_image_from_server.php?image=" + url;
+    return fetch(serverUrl).then((response) => {
         console.log(response);
         return response.blob();
     }).then(blob => {

@@ -31,7 +31,6 @@ class ChangePassword extends React.Component {
 
     render() {
         const {getFieldDecorator} = this.props.form;
-        const {user} = this.props;
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <div className="form-group">
