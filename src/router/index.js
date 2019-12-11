@@ -11,9 +11,10 @@ import PrivateRoute from "./PrivateRoute";
 import UserProfile from "../containers/UserProfile/UserProfile";
 import EditProfile from "../containers/EditProfile/EditProfile";
 import UploadImage from "../containers/UploadImage/UploadImage";
+import AdminRoute from "./AdminRoute";
 
 export default function (props) {
-    const {isAuthenticated} = props;
+    const {isAuthenticated, user} = props;
     return (
         <BrowserRouter>
             <Switch>
@@ -22,8 +23,7 @@ export default function (props) {
                 <Route path="/register" component={Register} exact/>
                 <Route path="/category/:id" component={Category} exact/>
                 <Route path="/search" component={Search} exact/>
-                <Route path="/admin" component={Admin} exact/>
-                {/*<Route path="/image-detail/:imageId" component={ImageDetail} exact/>*/}
+                <AdminRoute path="/admin" component={Admin} isAdmin={user.role == 'admin'} exact/>
                 <PrivateRoute path="/profile" isAuthenticated={isAuthenticated} component={UserProfile}/>
                 <PrivateRoute path="/edit-profile" isAuthenticated={isAuthenticated} component={EditProfile}/>
                 <PrivateRoute path="/submit-photo" isAuthenticated={isAuthenticated} component={UploadImage}/>

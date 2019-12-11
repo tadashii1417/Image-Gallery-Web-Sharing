@@ -16,20 +16,21 @@ class App extends Component {
     }
 
     render() {
-        const {isAuthenticated, isLoading} = this.props;
+        const {isAuthenticated, isLoading, user} = this.props;
 
         if (isLoading) {
             return <div>Loading ...</div>;
         }
 
         return (
-            <Route isAuthenticated={isAuthenticated}/>
+            <Route isAuthenticated={isAuthenticated} user={user}/>
         );
     }
 }
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.authReducer.isAuthenticated,
+    user: state.authReducer.user,
     isLoading: state.uiReducer.isLoading
 });
 
