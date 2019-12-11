@@ -1,9 +1,9 @@
 import React from 'react';
-import {Modal, Descriptions, Divider, Button} from "antd";
+import {Modal, Descriptions, Divider, Button, message} from "antd";
 import 'antd/es/modal/style/index.css';
 import 'antd/es/descriptions/style/index.css';
 import 'antd/es/divider/style/index.css';
-import {getDefaultAvatar, getImageBase, toDataURL} from "../../sessionStorage";
+import {getDefaultAvatar, getImageBase, getToken, toDataURL} from "../../sessionStorage";
 import styles from './imageCard.module.css';
 import axios from "../../axios";
 
@@ -39,16 +39,36 @@ class ImageCard extends React.Component {
         });
     };
 
+    handleCancel = e => {
+        this.setState({
+            visible: false,
+        });
+    };
+
     handleOk = e => {
         this.setState({
             visible: false,
         });
     };
 
-    handleCancel = e => {
-        this.setState({
-            visible: false,
-        });
+    handleLove = async (e, image) => {
+        e.stopPropagation();
+        const key = 'key';
+        let data = {
+            jwt: getToken(),
+            image_id: image.id
+        };
+        try {
+            await axios.post('/image/like.php', data);
+            await axios.post('/image/increase_love_times.php', data);
+            image.love++;
+            message.loading({content: 'Loading...', key});
+            setTimeout(() => {
+                message.success({content: 'Love successful !', key, duration: 2});
+            }, 1000);
+        } catch (err) {
+            message.error({content: err.response.data.message, key, duration: 2});
+        }
     };
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -71,7 +91,7 @@ class ImageCard extends React.Component {
 
                     <div className="overlay" style={{zIndex: 0}}>
                         <div className="img-action" style={{zIndex: 2}}>
-                            <button style={{marginRight: '4px'}}>
+                            <button style={{marginRight: '4px'}} onClick={(e) => this.handleLove(e, imageInfo)}>
                                 <i className="fa fa-heart"/>
                             </button>
                             <button>
@@ -94,7 +114,7 @@ class ImageCard extends React.Component {
                 </div>
                 <Modal
                     title={<div className={styles.imgAction}>
-                        <Button>
+                        <Button onClick={(e) => this.handleLove(e, imageInfo)}>
                             <i className="fa fa-heart"/>
                         </Button>
                         <Button>
@@ -110,12 +130,11 @@ class ImageCard extends React.Component {
                         </span>
                     </div>}
                     visible={this.state.visible}
+                    width={'70%'}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
-                    header={null}
-                    width={'70%'}
                     style={{textAlign: 'center'}}
-                >
+                    footer={null}>
                     <img src={getImageBase() + imageInfo.url} style={{maxWidth: '100%'}}
                          alt={imageInfo.description}/>
                     <Divider/>

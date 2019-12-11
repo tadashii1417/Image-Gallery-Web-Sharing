@@ -27,7 +27,7 @@ class EditBasic extends React.Component {
                         this.props.getMe(res.data.jwt);
                     })
                     .catch(err => {
-                        alert(err.message);
+                        message.error({content: err.message, key, duration: 2});
                     })
             }
         });
