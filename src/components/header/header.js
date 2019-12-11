@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import logo from "../../assets/image/logo.png";
-import {Menu, Icon, Dropdown, Avatar} from "antd";
+import {Menu, Icon, Dropdown, Avatar, Modal, Form, Input, message} from "antd";
 import {connect} from 'react-redux';
 import 'antd/es/menu/style/index.css';
 import 'antd/es/icon/style/index.css';
@@ -11,6 +11,7 @@ import styles from "./header.module.css";
 import * as authActions from '../../store/actions/auth.action';
 import axios from "../../axios";
 import {withRouter, Link} from 'react-router-dom';
+import {getToken} from "../../sessionStorage";
 
 const defaultAvatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
 const baseImage = "http://localhost/web/backend";
@@ -18,8 +19,49 @@ const baseImage = "http://localhost/web/backend";
 class Header extends Component {
     state = {
         showSideNav: false,
+        visible: false,
         categories: [],
         search: ""
+    };
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    handleOk = e => {
+        e.preventDefault();
+        const key = 'mkey';
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                values.jwt = getToken();
+                axios.post('/collection/create.php', values)
+                    .then(res => {
+                        message.loading({content: 'Loading...', key});
+                        setTimeout(() => {
+                            message.success({
+                                content: 'New collection has been created !',
+                                key,
+                                duration: 2
+                            });
+                        }, 2000);
+                        this.handleCancel();
+                    })
+                    .catch(err => {
+                        message.error({
+                            content: err.response.data.message,
+                            key,
+                            duration: 2
+                        });
+                    })
+            }
+        });
+    };
+
+    handleCancel = () => {
+        this.setState({
+            visible: false,
+        });
     };
 
     componentDidMount() {
@@ -67,6 +109,12 @@ class Header extends Component {
                     <span>Submit a photo</span>
                 </Link>
             </Menu.Item>
+            <Menu.Item key="xxx" className={styles.menuItem}>
+                <div onClick={this.showModal}>
+                    <Icon type="folder-open"/>
+                    <span>Create collection</span>
+                </div>
+            </Menu.Item>
             <Menu.Divider/>
             <Menu.Item key="logout" onClick={this.handlerLogout} className={styles.menuItem}>
                 <Icon type="logout"/>
@@ -76,6 +124,8 @@ class Header extends Component {
     );
 
     render() {
+        const {getFieldDecorator} = this.props.form;
+
         let sideNav = "";
         if (this.state.showSideNav) {
             sideNav = (
@@ -122,6 +172,41 @@ class Header extends Component {
 
         return (
             <header>
+                <Modal
+                    title="Create new collection"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                >
+                    <Form>
+                        <div className="form-group">
+                            <label htmlFor="user_email">
+                                Name
+                            </label>
+                            <Form.Item>
+                                {getFieldDecorator('name', {
+                                    rules: [{required: true, message: "Name cannot be null"}],
+                                })(
+                                    <Input className="form-control" required="required" name="user[description]"
+                                           id="user_description"/>,
+                                )}
+                            </Form.Item>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="user_email">
+                                Description
+                            </label>
+                            <Form.Item>
+                                {getFieldDecorator('description', {
+                                    rules: [],
+                                })(
+                                    <Input className="form-control" required="required" name="user[description]"
+                                           id="user_description"/>,
+                                )}
+                            </Form.Item>
+                        </div>
+                    </Form>
+                </Modal>
                 <nav>
                     <a href="/">
                         <div className="logo">
@@ -169,4 +254,6 @@ const mapDispatchToProps = (dispatch) => ({
     logout: () => dispatch(authActions.logout()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
+const HeaderWrap = Form.create({name: 'upload_image'})(Header);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HeaderWrap));

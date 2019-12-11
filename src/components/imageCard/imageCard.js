@@ -71,6 +71,10 @@ class ImageCard extends React.Component {
         }
     };
 
+    handleCollect = (e, image) => {
+
+    };
+
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return this.state.visible !== nextState.visible;
     }
@@ -94,7 +98,7 @@ class ImageCard extends React.Component {
                             <button style={{marginRight: '4px'}} onClick={(e) => this.handleLove(e, imageInfo)}>
                                 <i className="fa fa-heart"/>
                             </button>
-                            <button>
+                            <button onClick={(e) => this.handleCollect(e, imageInfo)}>
                                 <i className="fa fa-plus"/>
                                 Collect
                             </button>
@@ -117,7 +121,7 @@ class ImageCard extends React.Component {
                         <Button onClick={(e) => this.handleLove(e, imageInfo)}>
                             <i className="fa fa-heart"/>
                         </Button>
-                        <Button>
+                        <Button onClick={(e) => this.handleCollect(e, imageInfo)}>
                             <i className="fa fa-plus"/>
                             Collect
                         </Button>

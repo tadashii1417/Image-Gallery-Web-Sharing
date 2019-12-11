@@ -15,7 +15,7 @@ class EditProfile extends React.Component {
                 <TabPane
                     tab={
                         <span>
-                                        <Icon type="smile" theme="twoTone"/>
+                                        <Icon type="smile"/>
                                         Edit profile
                                 </span>
                     }
@@ -25,7 +25,7 @@ class EditProfile extends React.Component {
                 <TabPane
                     tab={
                         <span>
-                                    <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96"/>
+                                    <Icon type="key" />
                                     Change password
                                 </span>
                     }
@@ -35,8 +35,8 @@ class EditProfile extends React.Component {
                 <TabPane
                     tab={
                         <span>
-                                    <Icon type="folder-add" theme="twoTone" twoToneColor="#26a69a"/>
-                                    Collections
+                                        <Icon type="reddit" />
+                                    Change avatar
                                 </span>
                     }
                     key="3">
