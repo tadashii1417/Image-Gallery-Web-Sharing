@@ -21,7 +21,7 @@ class UploadImage extends React.Component {
         e.preventDefault();
         const key = 'updatable';
         this.props.form.validateFields((err, values) => {
-            if (!err) {
+            if (!err && this.state.file) {
                 let formData = new FormData();
                 formData.set("category_id", values.category);
                 formData.set("description", values.description);
