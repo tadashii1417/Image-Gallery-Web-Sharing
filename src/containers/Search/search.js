@@ -11,12 +11,11 @@ class Search extends Component {
         images: []
     };
 
-    componentDidUpdate() {
-        const query = new URLSearchParams(this.props.location.search);
+    componentWillReceiveProps(props) {
+        const query = new URLSearchParams(props.location.search);
         const keyword = query.get('keyword');
         axios.get("/image/search.php?keyword=" + keyword)
             .then(res => {
-                console.log(res);
                 if (res.data.images === "") {
                     this.setState({images: []});
                 } else {
@@ -24,14 +23,13 @@ class Search extends Component {
                 }
             })
             .catch(err => console.log(err.message));
-    }
 
+    }
     componentDidMount() {
         const query = new URLSearchParams(this.props.location.search);
         const keyword = query.get('keyword');
         axios.get("/image/search.php?keyword=" + keyword)
             .then(res => {
-                console.log(res);
                 if (res.data.images === "") {
                     this.setState({images: []});
                 } else {
@@ -50,7 +48,7 @@ class Search extends Component {
                 status="404"
                 title="404"
                 subTitle={"Sorry, no image result for keyword: " + keyword}
-                extra={<Button type="primary">Back Home</Button>}
+                extra={<Button type="primary" href="/">Back Home</Button>}
             />;
         } else {
             images = (

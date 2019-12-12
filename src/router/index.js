@@ -22,7 +22,7 @@ export default function (props) {
                 <Route path="/login" component={LoginForm} exact/>
                 <Route path="/register" component={Register} exact/>
                 <Route path="/category/:id" component={Category} exact/>
-                <Route path="/search" component={Search} exact/>
+                <Route path="/search" component={Search} />
                 <AdminRoute path="/admin" component={Admin} isAdmin={user.role === 'admin'} exact/>
                 <PrivateRoute path="/profile" isAuthenticated={isAuthenticated} component={UserProfile}/>
                 <PrivateRoute path="/edit-profile" isAuthenticated={isAuthenticated} component={EditProfile}/>
