@@ -1,18 +1,54 @@
 import React from "react";
 import Header from "../../components/header/header";
 import styles from './UserProfile.module.css';
-import {Button, Icon, Tabs} from 'antd';
+import {Button, Icon, Tabs, message} from 'antd';
 import 'antd/es/tabs/style/index.css';
 import UserImages from "../../components/UserImages/UserImages";
 import Collections from "../../components/Collections/Collections";
 import {connect} from "react-redux";
-import {getDefaultAvatar, getImageBase} from "../../sessionStorage";
+import {getDefaultAvatar, getImageBase, getToken, setToken} from "../../sessionStorage";
 import UserLoveImages from "../../components/UserLoveImages/UserLoveImages";
 import {Link} from "react-router-dom";
+import axios from "../../axios";
+import * as authActions from "../../store/actions/auth.action";
 
 const {TabPane} = Tabs;
 
 class UserProfile extends React.Component {
+    state = {
+        avatar: null
+    };
+    inputFileRef = React.createRef();
+
+    handleBtnClick = () => {
+        this.inputFileRef.current.click();
+    };
+
+    handleChange = (e, user) => {
+        e.stopPropagation();
+        let formData = new FormData();
+        formData.set("jwt", getToken());
+        formData.append("avatar", this.state.avatar);
+        const key = "ssss";
+        axios.post('/user/change_avatar.php', formData)
+            .then(res => {
+                // user.avatarUrl = res.
+                setToken(res.data.jwt);
+                message.success({
+                    content: 'Avatar change !',
+                    key,
+                    duration: 2
+                });
+                this.props.getMe(getToken());
+            })
+            .catch(err => {
+                message.error({
+                    content: err.response.data.message,
+                    key,
+                    duration: 2
+                });
+            })
+    };
 
     render() {
         const {user} = this.props;
@@ -28,9 +64,14 @@ class UserProfile extends React.Component {
                 <div className={styles.container}>
                     <div className={styles.userinfo}>
 
-                        <div className={styles.left}>
+                        <div className={styles.left} onClick={this.handleBtnClick}>
                             <img src={avatar} alt="avatar"/>
+                            {this.state.avatar ? this.state.avatar.name : ""}
+                            <Button type="primary" size={"small"}
+                                    style={{margin: '0 auto', display: this.state.avatar ? 'block' : 'none'}}
+                                    onClick={(e) => this.handleChange(e, user)}>Change</Button>
                         </div>
+
                         <div className={styles.right}>
                             <h4>{user.firstname + " " + user.lastname}</h4>
                             <div className={styles.inforitem}><Icon type="fire" theme="twoTone"/>
@@ -43,6 +84,17 @@ class UserProfile extends React.Component {
                                 <Link to={"/edit-profile"}>
                                     <Button type="default" icon="setting">Edit profile</Button>
                                 </Link>
+                                <input ref={this.inputFileRef} type={"file"} style={{display: 'none'}}
+                                       onChange={(evt) => {
+                                           evt.preventDefault();
+                                           this.setState({
+                                                   avatar: evt.target.files[0]
+                                               }
+                                           );
+                                           console.log(this.state.avatar);
+                                       }}/>,
+
+
                             </div>
                         </div>
 
@@ -91,4 +143,8 @@ const mapStateToProps = (state) => ({
     user: state.authReducer.user
 });
 
-export default connect(mapStateToProps, null)(UserProfile);
+const mapDispatchToProps = (dispatch) => ({
+    getMe: (token) => dispatch(authActions.getMe(token))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
