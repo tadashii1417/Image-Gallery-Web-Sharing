@@ -8,6 +8,7 @@
     display: flex;
     margin-top: 40px;
 }
+
 .container2 {
     width: 70%;
     margin: 0 auto;
@@ -17,13 +18,20 @@
 
 .left {
     flex: 30%;
-    align-content: flex-end;
+    /*align-content: flex-end;*/
+    align-items: center;
+    align-content: center;
+    text-align: center;
 }
 
 .left img {
     width: 200px;
     height: 200px;
     border-radius: 50%;
+}
+
+.left img:hover {
+    opacity: 60%;
 }
 
 .right {
