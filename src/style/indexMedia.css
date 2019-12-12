@@ -39,7 +39,7 @@
 
 /* Small Devices, Tablets */
 @media only screen and (max-width: 768px) {
-  .action-area {
+  .action-area, #username {
     display: none;
   }
   .searchbox {
@@ -58,7 +58,7 @@
             flex: 100%;
     max-width: 100%;
   }
-  .searchbox {
+  .searchbox, #username {
     display: none;
   }
 }

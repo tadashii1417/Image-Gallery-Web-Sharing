@@ -64,7 +64,7 @@ class UserProfile extends React.Component {
                 <div className={styles.container}>
                     <div className={styles.userinfo}>
 
-                        <div className={styles.left} onClick={this.handleBtnClick}>
+                        <div className={styles.left} onClick={this.handleBtnClick} style={{cursor: 'pointer'}}>
                             <img src={avatar} alt="avatar"/>
                             {this.state.avatar ? this.state.avatar.name : ""}
                             <Button type="primary" size={"small"}
