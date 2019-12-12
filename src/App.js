@@ -10,23 +10,28 @@ import {getToken} from "./sessionStorage";
 
 class App extends Component {
 
-
-    async componentDidMount() {
+    componentDidMount() {
         const {getMe} = this.props;
-        await getMe(getToken());
+        getMe(getToken());
     }
 
     render() {
-        const {isAuthenticated} = this.props;
-        console.log("app.js" + isAuthenticated);
+        const {isAuthenticated, isLoading, user} = this.props;
+
+        if (isLoading) {
+            return <div>Loading ...</div>;
+        }
+
         return (
-            <Route isAuthenticated={isAuthenticated}/>
+            <Route isAuthenticated={isAuthenticated} user={user}/>
         );
     }
 }
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.authReducer.isAuthenticated,
+    user: state.authReducer.user,
+    isLoading: state.uiReducer.isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({

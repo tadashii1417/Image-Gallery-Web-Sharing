@@ -1,10 +1,10 @@
 import React from "react";
-import {Alert, Icon} from "antd";
+import {Alert} from "antd";
 import CollectionsItem from "./CollectionItem";
 import styles from './CollectionItem.module.css';
 import axios from "../../axios";
 import {connect} from "react-redux";
-import {Route, Switch} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import CollectionImageList from "./CollectionImageList";
 
 class Collections extends React.Component {
@@ -30,7 +30,8 @@ class Collections extends React.Component {
                 </div>
                 <Route path={"/profile/:id"} render={() => <CollectionImageList/>} exact/>
                 <Route path={"/profile"}
-                       render={() => <Alert style={{margin: '50px'}} message="Click on the collection to view images" type="info" showIcon/>}
+                       render={() => <Alert style={{margin: '50px'}} message="Click on the collection to view images"
+                                            type="info" showIcon/>}
                        exact/>
             </div>
 

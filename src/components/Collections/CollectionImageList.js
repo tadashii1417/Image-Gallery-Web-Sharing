@@ -21,6 +21,7 @@ class CollectionImageList extends React.Component {
             })
             .catch(err => console.log(err.message));
     }
+
     componentDidUpdate() {
         const id = this.props.match.params.id;
         axios.get("/image/get_images_of_collection.php?collection_id=" + id)

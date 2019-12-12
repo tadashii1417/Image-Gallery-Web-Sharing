@@ -3,7 +3,7 @@ import Header from "../../components/header/header";
 import styles from './UploadImage.module.css';
 import 'antd/es/tabs/style/index.css';
 import {connect} from "react-redux";
-import {Form, Input, Upload, Icon, message, Button, Select} from "antd";
+import {Form, Input, message, Button, Select} from "antd";
 import 'antd/es/upload/style/index.css';
 import 'antd/es/select/style/index.css';
 import axios from "../../axios";
@@ -77,7 +77,7 @@ class UploadImage extends React.Component {
                             })(
                                 <Select placeholder="Please select category">
                                     {this.state.categories.map(cat => (
-                                        <Option value={cat.id}>{cat.name}</Option>
+                                        <Option value={cat.id} key={cat.id}>{cat.name}</Option>
                                     ))}
                                 </Select>,
                             )}
