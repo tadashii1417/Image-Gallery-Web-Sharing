@@ -32,16 +32,16 @@ class EditProfile extends React.Component {
                     key="2">
                     <ChangePass/>
                 </TabPane>
-                <TabPane
-                    tab={
-                        <span>
-                                        <Icon type="reddit" />
-                                    Change avatar
-                                </span>
-                    }
-                    key="3">
-                    Update avatar
-                </TabPane>
+                {/*<TabPane*/}
+                {/*    tab={*/}
+                {/*        <span>*/}
+                {/*                        <Icon type="reddit" />*/}
+                {/*                    Change avatar*/}
+                {/*                </span>*/}
+                {/*    }*/}
+                {/*    key="3">*/}
+                {/*    Update avatar*/}
+                {/*</TabPane>*/}
             </Tabs>
         </div>
     }
