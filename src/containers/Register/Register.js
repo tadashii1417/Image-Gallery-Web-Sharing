@@ -6,6 +6,7 @@ import {Input, Form, Button, Alert, message} from 'antd';
 import 'antd/es/message/style/index.css';
 import {Redirect} from 'react-router-dom';
 import axios from "../../axios";
+import {connect} from "react-redux";
 
 class Register extends Component {
     state = {
@@ -21,9 +22,9 @@ class Register extends Component {
             if (!err) {
                 axios.post('/user/create.php', values)
                     .then(res => {
-                        message.loading({ content: 'Loading...', key });
+                        message.loading({content: 'Loading...', key});
                         setTimeout(() => {
-                            message.success({ content: 'Your account has been created !', key, duration: 2 });
+                            message.success({content: 'Your account has been created !', key, duration: 2});
                         }, 1000);
                         this.setState({created: true});
                     })
@@ -36,6 +37,10 @@ class Register extends Component {
 
     render() {
         const {getFieldDecorator} = this.props.form;
+        if (this.props.isAuthenticated) {
+            return <Redirect to="/"/>
+        }
+
         let error = "";
         if (this.state.error) {
             error = <Alert message={this.state.message} type="error" showIcon/>
@@ -205,6 +210,9 @@ class Register extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.authReducer.isAuthenticated
+});
 const RegisterForm = Form.create({name: 'register'})(Register);
 
-export default RegisterForm;
+export default connect(mapStateToProps, null)(RegisterForm);

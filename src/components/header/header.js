@@ -154,7 +154,7 @@ class Header extends Component {
             AuthMenu = (
                 <Dropdown overlay={this.rightMenu}>
                     <div className={styles.dropdown}>
-                        <span className={styles.username}>{user.username}</span>
+                        <span className={styles.username} id={"username"}>{user.username}</span>
                         <Avatar src={avatar}/>
                     </div>
                 </Dropdown>);
