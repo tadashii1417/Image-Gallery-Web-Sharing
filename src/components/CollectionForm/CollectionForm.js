@@ -2,7 +2,6 @@ import React from "react";
 import axios from "../../axios";
 import {connect} from "react-redux";
 import {Button, Divider, Form, message, Select} from "antd";
-import {getToken} from "../../sessionStorage";
 
 const {Option} = Select;
 
