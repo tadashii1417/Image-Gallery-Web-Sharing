@@ -229,7 +229,7 @@ class Header extends Component {
                     </div>
                     <div className="navigation">
                         <ul>
-                            <li><a href="/categories">Categories</a></li>
+                            <li><a href="/profile/1">Collection</a></li>
                             <li><a href="/">Explore</a></li>
                             <li><a href="/">About us</a></li>
                         </ul>

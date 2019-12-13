@@ -22,7 +22,7 @@ class Homepage extends Component {
         return (
             <div>
                 <Header/>
-                <Welcome/>
+                <Welcome {...this.props}/>
                 <ImageList images={this.state.images} title={true}/>
                 <Footer/>
             </div>
