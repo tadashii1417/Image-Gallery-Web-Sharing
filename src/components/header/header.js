@@ -109,12 +109,21 @@ class Header extends Component {
                     <span>Submit a photo</span>
                 </Link>
             </Menu.Item>
+
             <Menu.Item key="xxx" className={styles.menuItem}>
                 <div onClick={this.showModal}>
                     <Icon type="folder-open"/>
                     <span>Create collection</span>
                 </div>
             </Menu.Item>
+            {this.props.user.role === 'admin' ?
+                <Menu.Item key="" className={styles.menuItem}>
+                    <Link to={"/admin"}>
+                        <Icon type="rocket"/>
+                        <span>Admin dashboard</span>
+                    </Link>
+                </Menu.Item>
+                : ""}
             <Menu.Divider/>
             <Menu.Item key="logout" onClick={this.handlerLogout} className={styles.menuItem}>
                 <Icon type="logout"/>

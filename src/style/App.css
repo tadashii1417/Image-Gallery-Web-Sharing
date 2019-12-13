@@ -338,7 +338,7 @@ nav ul a {
 }
 
 .column {
-    -webkit-box-flex: 33%;
+    /*-webkit-box-flex: 33%;*/
     -ms-flex: 33%;
     flex: 33%;
     max-width: 33%;
@@ -411,10 +411,10 @@ nav ul a {
     text-align: center;
     font-weight: 500;
     height: 32px;
-    -webkit-border-radius:;
-    -moz-border-radius:;
-    -ms-border-radius:;
-    -o-border-radius:;
+    /*-webkit-border-radius:;*/
+    /*-moz-border-radius:;*/
+    /*-ms-border-radius:;*/
+    /*-o-border-radius:;*/
 }
 
 .overlay button:hover {
